@@ -1,4 +1,4 @@
-// stack.cpp: определяет точку входа для консольного приложения.
+// stack.cpp: Г®ГЇГ°ГҐГ¤ГҐГ«ГїГҐГІ ГІГ®Г·ГЄГі ГўГµГ®Г¤Г  Г¤Г«Гї ГЄГ®Г­Г±Г®Г«ГјГ­Г®ГЈГ® ГЇГ°ГЁГ«Г®Г¦ГҐГ­ГЁГї.
 //
 
 #include "stdafx.h"
@@ -73,7 +73,7 @@ auto stack<T>::push(T const & obj) -> void {
 		size = size * 2 + (size == 0);
 		T * buff = copy(ptr, size, count);
 		delete[] ptr;
-		ptr = copy(buff, size, count);
+		ptr = buff;
 	}
 	ptr[count] = obj;
 	++count;
