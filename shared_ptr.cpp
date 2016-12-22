@@ -1,43 +1,45 @@
-template<T>
+template<class T>
 class shared_ptr
 {
-    T* pObj;
-    static int count; //счетчик указателей на pObj
+    T* ptr_;
+    size_t* count_; 
 public:
-    shared_ptr(T* myObj);
-    shared_ptr(const shared_ptr &myObj);
+    shared_ptr();
+    shared_ptr(T* p);
+    shared_ptr(const shared_ptr &p);
     ~shared_ptr();
-    shared_ptr& operator=(shared_ptr &myObj);
+    shared_ptr& operator=(shared_ptr &p);
 };
 
-int shared_ptr::count=0;
- 
-shared_ptr::shared_ptr(T* myObj)
+template<class T>
+shared_ptr<T>::shared_ptr(): ptr_(nullptr), count_(nullptr) 
+{}
+
+template<class T>
+shared_ptr<T>::shared_ptr(T* p): ptr_(p), count_(new size_t(1))
+{}
+
+template<class T>
+shared_ptr<T>::shared_ptr(const shared_ptr<T> &p): ptr_(p.ptr_), count_(p.count_)
 {
-    pObj=myObj; 
-};
-shared_ptr::shared_ptr(const shared_ptr &myObj)
-{
-    shared_ptr p1 = new T();
-    p1.pObj = myObj.pObj;
-    count++;
+    if (ptr_!=nullptr)
+        ++(*count_);
 };
  
 shared_ptr::~shared_ptr()
 {
-    if(count==1)//если имеется только один указатель на объект, то чистим память
+    if(count_==1)//если имеется только один указатель на объект, то чистим память
     {
-        delete pObj;
-        count = 0;
-        printf("Another crash\n");
+        delete ptr_;
+        delete count_;
     }
     else 
-        pObj = NULL;
-        count--;
+        ptr_ = nullptr;
+        (*count_)--;
 };
  
-shared_ptr& shared_ptr::operator=(shared_ptr &myObj)
+shared_ptr& shared_ptr::operator=(shared_ptr &p)
 {
-    count++;
-    return myObj;
+    std::swap(ptr, p.ptr);
+	std::swap(count, p.count);
 }
