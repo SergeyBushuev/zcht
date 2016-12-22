@@ -28,7 +28,7 @@ shared_ptr<T>::shared_ptr(const shared_ptr<T> &p): ptr_(p.ptr_), count_(p.count_
  
 shared_ptr::~shared_ptr()
 {
-    if(count_==1)//если имеется только один указатель на объект, то чистим память
+    if(count_==1)//<------------------ ??
     {
         delete ptr_;
         delete count_;
